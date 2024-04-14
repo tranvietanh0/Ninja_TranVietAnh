@@ -4,20 +4,24 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float speed = 5f;
-    [SerializeField] private Animator anim;
     [SerializeField] private float jumpForce = 350;
     private bool isGrounded = true;
     private bool isJumping = false;
     private bool isAttack = false;
     private float horizontal;
-    private string currentAnimName;
     private bool isDeath = false;
     private int coin = 0;
+    private Vector3 savePoint;
+
+    void Start()
+    {
+        SavePoint();
+    }
 
     void FixedUpdate()
     {
@@ -81,6 +85,26 @@ public class Player : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
+
+    public override void OnInit()
+    {
+        base.OnInit();
+        isDeath = false;
+        isAttack = false;
+        transform.position = savePoint;
+        ChangeAnim("idle");
+    }
+
+    public override void OnDespawn()
+    {
+        base.OnDespawn();
+    }
+
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+    }
+
     private bool CheckGrounded()
     {
         // Debug.DrawLine(transform.position, transform.position + Vector3.down * 1.1f, Color.red);
@@ -115,14 +139,9 @@ public class Player : MonoBehaviour
         rb.AddForce(jumpForce * Vector2.up);
     }
 
-    private void ChangeAnim(string animName)
+    internal void SavePoint()
     {
-        if (currentAnimName != animName)
-        {
-            anim.ResetTrigger(animName);
-            currentAnimName = animName;
-            anim.SetTrigger(currentAnimName);
-        }
+        savePoint = transform.position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -135,7 +154,9 @@ public class Player : MonoBehaviour
 
         if (collision.tag == "Deadzone")
         {
+            isDeath = true;
             ChangeAnim("die");
+            Invoke(nameof(OnInit), 1f);
         }
     }
 }

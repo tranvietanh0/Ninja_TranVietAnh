@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coin
   - Deadzone
+  - EnemyWall
   layers:
   - Default
   - TransparentFX

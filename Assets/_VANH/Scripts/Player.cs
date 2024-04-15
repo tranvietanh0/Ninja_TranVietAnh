@@ -10,6 +10,10 @@ public class Player : Character
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 350;
+
+    [SerializeField] private Kunai kunaiPrefab;
+    [SerializeField] private Transform throwPoint;
+    
     private bool isGrounded = true;
     private bool isJumping = false;
     private bool isAttack = false;
@@ -124,6 +128,7 @@ public class Player : Character
         ChangeAnim("throw");
         isAttack = true;
         Invoke(nameof(ResetAttack), 0.5f);
+        Instantiate(kunaiPrefab, throwPoint.position, throwPoint.rotation);
     }
 
     private void ResetAttack()

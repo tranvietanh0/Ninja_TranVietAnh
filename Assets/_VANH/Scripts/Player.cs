@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class Player : Character
 
     [SerializeField] private Kunai kunaiPrefab;
     [SerializeField] private Transform throwPoint;
+    [SerializeField] private GameObject attackArea;
     
     private bool isGrounded = true;
     private bool isJumping = false;
@@ -22,10 +24,6 @@ public class Player : Character
     private int coin = 0;
     private Vector3 savePoint;
 
-    void Start()
-    {
-        SavePoint();
-    }
 
     void FixedUpdate()
     {
@@ -97,11 +95,14 @@ public class Player : Character
         isAttack = false;
         transform.position = savePoint;
         ChangeAnim("idle");
+        DeActiveAttack();
+        SavePoint();
     }
 
     public override void OnDespawn()
     {
         base.OnDespawn();
+        OnInit();
     }
 
     protected override void OnDeath()
@@ -121,6 +122,8 @@ public class Player : Character
         ChangeAnim("attack");
         isAttack = true;
         Invoke(nameof(ResetAttack), 0.5f);
+        ActiveAttack();
+        Invoke(nameof(DeActiveAttack), 0.5f);
     }
 
     private void Throw()
@@ -149,6 +152,15 @@ public class Player : Character
         savePoint = transform.position;
     }
 
+    private void ActiveAttack()
+    {
+        attackArea.SetActive(true);
+    }
+
+    private void DeActiveAttack()
+    {
+        attackArea.SetActive(false);
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Coin")

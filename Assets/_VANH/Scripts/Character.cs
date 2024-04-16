@@ -27,7 +27,8 @@ public class Character : MonoBehaviour
     }
     protected virtual void OnDeath()
     {
-        
+        ChangeAnim("die");
+        Invoke(nameof(OnDespawn), 2f);
     }
     protected void ChangeAnim(string animName)
     {
@@ -41,6 +42,7 @@ public class Character : MonoBehaviour
 
     public void OnHit(float damage)
     {
+        Debug.Log("hit");
         if (!IsDead)
         {
             hp -= damage;

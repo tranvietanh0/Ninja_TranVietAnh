@@ -32,7 +32,7 @@ public class Player : Character
             return;
         }
         isGrounded = CheckGrounded();
-        horizontal = Input.GetAxisRaw("Horizontal");
+        // horizontal = Input.GetAxisRaw("Horizontal");
 
         if (isAttack)
         {
@@ -78,7 +78,7 @@ public class Player : Character
         if (Mathf.Abs(horizontal) > 0.1f)
         {   
             ChangeAnim("run");
-            rb.velocity = new Vector2(horizontal * Time.deltaTime * speed, rb.velocity.y);
+            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
             transform.rotation = Quaternion.Euler(new Vector3(0, horizontal > 0 ? 0 : 180, 0));
         }
         else if (isGrounded)
@@ -116,7 +116,7 @@ public class Player : Character
         return hit.collider != null;
     }
 
-    private void Attack()
+    public void Attack()
     {
         ChangeAnim("attack");
         isAttack = true;
@@ -125,7 +125,7 @@ public class Player : Character
         Invoke(nameof(DeActiveAttack), 0.5f);
     }
 
-    private void Throw()
+    public void Throw()
     {
         ChangeAnim("throw");
         isAttack = true;
@@ -139,7 +139,7 @@ public class Player : Character
         // ChangeAnim("ilde");
     }
 
-    private void Jump()
+    public void Jump()
     {
         isJumping = true;
         ChangeAnim("jump");
@@ -160,6 +160,11 @@ public class Player : Character
     {
         attackArea.SetActive(false);
     }
+
+    public void SetMove(float horizontal)
+    {
+        this.horizontal = horizontal;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Coin")
@@ -174,4 +179,5 @@ public class Player : Character
             Invoke(nameof(OnInit), 1f);
         }
     }
+    
 }

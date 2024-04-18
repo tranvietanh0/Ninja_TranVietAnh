@@ -24,7 +24,10 @@ public class Player : Character
     private int coin = 0;
     private Vector3 savePoint;
 
-
+    void Awake()
+    {
+        coin = PlayerPrefs.GetInt("coin", 0);
+    }
     void Update()
     {
         if (IsDead)
@@ -171,6 +174,7 @@ public class Player : Character
         if (collision.tag == "Coin")
         {
             coin++;
+            PlayerPrefs.SetInt("coin", coin);
             UIManager.instance.SetCoin(coin);
             Destroy(collision.gameObject);
         }

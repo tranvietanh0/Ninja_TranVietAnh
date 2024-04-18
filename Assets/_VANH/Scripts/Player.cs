@@ -25,9 +25,9 @@ public class Player : Character
     private Vector3 savePoint;
 
 
-    void FixedUpdate()
+    void Update()
     {
-        if (isDeath)
+        if (IsDead)
         {
             return;
         }
@@ -78,7 +78,7 @@ public class Player : Character
         if (Mathf.Abs(horizontal) > 0.1f)
         {   
             ChangeAnim("run");
-            rb.velocity = new Vector2(horizontal * Time.fixedDeltaTime * speed, rb.velocity.y);
+            rb.velocity = new Vector2(horizontal * Time.deltaTime * speed, rb.velocity.y);
             transform.rotation = Quaternion.Euler(new Vector3(0, horizontal > 0 ? 0 : 180, 0));
         }
         else if (isGrounded)
@@ -91,7 +91,6 @@ public class Player : Character
     public override void OnInit()
     {
         base.OnInit();
-        isDeath = false;
         isAttack = false;
         transform.position = savePoint;
         ChangeAnim("idle");
@@ -171,7 +170,6 @@ public class Player : Character
 
         if (collision.tag == "Deadzone")
         {
-            isDeath = true;
             ChangeAnim("die");
             Invoke(nameof(OnInit), 1f);
         }

@@ -17,7 +17,7 @@ public class Enemy : Character
     public Character Target => target;
     private void Update()
     {
-        if (currentState != null)
+        if (currentState != null && !IsDead)
         {
             currentState.OnExcute(this);
         }

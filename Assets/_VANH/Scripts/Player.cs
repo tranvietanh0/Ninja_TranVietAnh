@@ -96,6 +96,7 @@ public class Player : Character
         ChangeAnim("idle");
         DeActiveAttack();
         SavePoint();
+        UIManager.instance.SetCoin(coin);
     }
 
     public override void OnDespawn()
@@ -170,6 +171,7 @@ public class Player : Character
         if (collision.tag == "Coin")
         {
             coin++;
+            UIManager.instance.SetCoin(coin);
             Destroy(collision.gameObject);
         }
 

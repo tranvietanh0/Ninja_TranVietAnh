@@ -35,8 +35,8 @@ public class Player : Character
             return;
         }
         isGrounded = CheckGrounded();
-        // horizontal = Input.GetAxisRaw("Horizontal");
-
+        horizontal = Input.GetAxisRaw("Horizontal");
+    
         if (isAttack)
         {
             rb.velocity = Vector2.zero;
@@ -147,7 +147,10 @@ public class Player : Character
     {
         isJumping = true;
         ChangeAnim("jump");
-        rb.AddForce(jumpForce * Vector2.up);
+        if (isGrounded)
+        {
+            rb.AddForce(jumpForce * Vector2.up);
+        }
     }
 
     internal void SavePoint()

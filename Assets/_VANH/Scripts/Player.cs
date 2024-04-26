@@ -15,6 +15,8 @@ public class Player : Character
     [SerializeField] private Kunai kunaiPrefab;
     [SerializeField] private Transform throwPoint;
     [SerializeField] private GameObject attackArea;
+
+    [SerializeField] private Transform aTeleport, bTeleport;
     
     private bool isGrounded = true;
     private bool isJumping = false;
@@ -192,6 +194,11 @@ public class Player : Character
         if (collision.tag == "Spike")
         {
             OnHit(spikeDamage);
+        }
+
+        if (collision.tag == "aTeleport")
+        {
+            transform.position = bTeleport.position;
         }
     }
     

@@ -10,6 +10,9 @@ TagManager:
   - Enemy
   - Ground
   - Spike
+  - Hiddenroom
+  - aTeleport
+  - bTeleport
   layers:
   - Default
   - TransparentFX

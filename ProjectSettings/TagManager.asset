@@ -8,6 +8,8 @@ TagManager:
   - Deadzone
   - EnemyWall
   - Enemy
+  - Ground
+  - Spike
   layers:
   - Default
   - TransparentFX

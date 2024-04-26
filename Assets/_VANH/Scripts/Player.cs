@@ -23,6 +23,7 @@ public class Player : Character
     private bool isDeath = false;
     private int coin = 0;
     private Vector3 savePoint;
+    private int spikeDamage = 10;
 
     void Awake()
     {
@@ -186,6 +187,11 @@ public class Player : Character
         {
             ChangeAnim("die");
             Invoke(nameof(OnInit), 1f);
+        }
+
+        if (collision.tag == "Spike")
+        {
+            OnHit(spikeDamage);
         }
     }
     

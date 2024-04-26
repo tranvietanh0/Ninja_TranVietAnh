@@ -85,6 +85,15 @@ public class Player : Character
         {   
             ChangeAnim("run");
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+            if (Input.GetKey(KeyCode.R))
+            {
+                rb.velocity += new Vector2(horizontal * speed, rb.velocity.y);
+            }
+
+            if (Input.GetKeyUp(KeyCode.R))
+            {
+                rb.velocity -= new Vector2(horizontal * speed, rb.velocity.y);
+            }
             transform.rotation = Quaternion.Euler(new Vector3(0, horizontal > 0 ? 0 : 180, 0));
         }
         else if (isGrounded)

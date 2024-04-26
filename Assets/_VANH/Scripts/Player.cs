@@ -26,10 +26,14 @@ public class Player : Character
     private int coin = 0;
     private Vector3 savePoint;
     private int spikeDamage = 10;
+    private float timeToHeal = 10f;
+    private float lastActionTime;
+    private float healValue = 10f;
 
     void Awake()
     {
         coin = PlayerPrefs.GetInt("coin", 0);
+        lastActionTime = Time.time;
     }
     void Update()
     {
@@ -101,6 +105,8 @@ public class Player : Character
             ChangeAnim("idle");
             rb.velocity = Vector2.zero;
         }
+        //hoi mau khi ko lam j trong 10s
+        CheckToHeal();
     }
 
     public override void OnInit()
@@ -208,6 +214,22 @@ public class Player : Character
         if (collision.tag == "aTeleport")
         {
             transform.position = bTeleport.position;
+        }
+    }
+
+    private void CheckToHeal()
+    {
+        if (Input.anyKey)
+        {
+            lastActionTime = Time.time;
+        }
+        else
+        {
+            float idleTime = Time.time - lastActionTime;
+            if (idleTime >= timeToHeal)
+            {
+                
+            }
         }
     }
     

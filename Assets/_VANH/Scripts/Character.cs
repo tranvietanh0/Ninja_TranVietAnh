@@ -59,5 +59,15 @@ public class Character : MonoBehaviour
             Instantiate(CombatTextPrefab, transform.position + Vector3.up, Quaternion.identity).OnInit(damage);
         }
     }
-    
+
+    public void Heal(float value)
+    {
+        while (hp != 100)
+        {
+            hp += value;
+            Debug.Log(hp);
+            healthBar.SetNewHp(hp);
+            Instantiate(CombatTextPrefab, transform.position + Vector3.up, Quaternion.identity).OnInit(value);
+        }
+    }
 }
